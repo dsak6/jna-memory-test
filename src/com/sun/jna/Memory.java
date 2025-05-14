@@ -792,6 +792,11 @@ public class Memory extends Pointer implements Closeable {
         public synchronized void run() {
             try {
                 free(peer);
+                System.out.println("Memory at peer 0x" + Long.toHexString(peer) + " freed. Sleeping for 1 minute...");
+                Thread.sleep(60000); // Sleep for 1 minute (60000 milliseconds)
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt(); // Restore interrupt status
+                System.out.println("Sleep interrupted after freeing memory at peer 0x" + Long.toHexString(peer));
             } finally {
                 allocatedMemory.remove(peer);
                 peer = 0;
